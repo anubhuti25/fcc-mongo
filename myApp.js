@@ -16,7 +16,7 @@ const createAndSavePerson = (done) => {
   let person = new Person({
     name: 'Anubhuti',
     age: 25,
-    favoriteFoods: ['Ice-cream']
+    favoriteFoods: ['burrito']
   });
   person.save((err, data) => {
     if(err) return console.error(err)
@@ -89,15 +89,11 @@ const removeManyPeople = (done) => {
 };
 
 const queryChain = (done) => {
-  const foodToSearch = "Anubhuti";
-  Person.find({ name:  foodToSearch})
-  .sort({ name: 1 })
-  .limit(2)
-  .select({ age: 0 })
-  .exec(function(err, data) {
-    if(err) return console.log(err);
-    done(null, data);
-  });
+  const foodToSearch = "burrito";
+  var jsonObject = {favoriteFoods : foodToSearch};
+  Person.find(jsonObject).sort({name: 'asc'}).limit(2).select({age: 0}).exec((err, data) => {
+    (err) ? done(err) : done(null, data); 
+  })
 };
 
 /** **Well Done !!**
